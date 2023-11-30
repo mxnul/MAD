@@ -70,7 +70,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-   //senadi's part////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   private fun getCurrentLocationAndWeather() {
+        try {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location ->
+                    if (location != null) {
+                        loadWeather(location.latitude, location.longitude)
+                    } else {
+                        dismissProgressDialog()
+                        showErrorToast("Location not available")
+                    }
+                }
+                .addOnFailureListener { e ->
+                    dismissProgressDialog()
+                    Log.e("Location", " location Error", e)
+                    showErrorToast(" location Error")
+                }
+        } catch (e: SecurityException) {
+            dismissProgressDialog()
+            Log.e("Location", "Security exception: ${e.message}")
+            showErrorToast("Location permission denied")
+        }
+    }
 
     private fun loadWeather(latitude: Double, longitude: Double) {
         val url =
