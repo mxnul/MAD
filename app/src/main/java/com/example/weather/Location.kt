@@ -56,7 +56,24 @@ class Location : AppCompatActivity() {
     }
 
    /////////////isuru///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   private fun loadDetails(cityName: String) {
+       val url =
+           "https://api.openweathermap.org/data/2.5/weather?q=$cityName&units=metric&appid=$apiKey"
 
+       val request = JsonObjectRequest(
+           Request.Method.GET, url, null,
+           Response.Listener { response ->
+               // Parse weather details from the response
+               parseWeatherDetails(response)
+           },
+           Response.ErrorListener { error ->
+               // Handle error here
+               error.printStackTrace()
+           })
+
+       // Add the request to the RequestQueue
+       Volley.newRequestQueue(this).add(request)
+   }
     private fun parseWeatherDetails(response: JSONObject) {
         try {
             val cityName = response.getString("name")
