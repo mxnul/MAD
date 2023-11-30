@@ -138,7 +138,6 @@ class MainActivity : AppCompatActivity() {
             },
             { error ->
                 Log.e("Response", error.toString())
-                // Handle error here
                 dismissProgressDialog()
                 showErrorToast("Error fetching weather data")
             })

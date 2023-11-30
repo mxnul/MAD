@@ -47,7 +47,7 @@ class Location : AppCompatActivity() {
 
         enterText.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE || (event?.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
-                // Perform weather search for the entered city
+
                 loadDetails(enterText.text.toString())
                 return@setOnEditorActionListener true
             }
@@ -63,15 +63,15 @@ class Location : AppCompatActivity() {
        val request = JsonObjectRequest(
            Request.Method.GET, url, null,
            Response.Listener { response ->
-               // Parse weather details from the response
+
                parseWeatherDetails(response)
            },
            Response.ErrorListener { error ->
-               // Handle error here
+
                error.printStackTrace()
            })
 
-       // Add the request to the RequestQueue
+
        Volley.newRequestQueue(this).add(request)
    }
     private fun parseWeatherDetails(response: JSONObject) {
